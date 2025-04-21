@@ -1,6 +1,7 @@
 package com.heima.tliaswebmanagement.mapper;
 
 import com.heima.tliaswebmanagement.pojo.Emp;
+import com.heima.tliaswebmanagement.pojo.EmpQueryParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -33,5 +34,5 @@ public interface EmpMapper {
 
 //  @Select("select e.*, d.name as deptName from emp as e left join dept as d " +
 //    "on e.dept_id = d.id order by e.update_time desc")
-  List<Emp> list(String name, Integer gender, LocalDate begin, LocalDate end);
+  List<Emp> list(EmpQueryParam queryParam);
 }

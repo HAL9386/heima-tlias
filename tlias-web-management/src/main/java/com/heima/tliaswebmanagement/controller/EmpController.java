@@ -1,6 +1,7 @@
 package com.heima.tliaswebmanagement.controller;
 
 import com.heima.tliaswebmanagement.pojo.Emp;
+import com.heima.tliaswebmanagement.pojo.EmpQueryParam;
 import com.heima.tliaswebmanagement.pojo.PageResult;
 import com.heima.tliaswebmanagement.pojo.Result;
 import com.heima.tliaswebmanagement.service.EmpService;
@@ -32,14 +33,9 @@ public class EmpController {
    * @return 返回分页查询结果
    */
   @GetMapping
-  public Result page(@RequestParam(defaultValue = "1") Integer page,
-                     @RequestParam(defaultValue = "10") Integer pageSize,
-                     String name, Integer gender,
-                     @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,
-                     @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
-    log.info("分页查询，参数：page = {}, pageSize = {}, name = {}, gender = {}, begin = {}, end = {}",
-      page, pageSize, name, gender, begin, end);
-    PageResult<Emp> pageResult = empService.page(page, pageSize, name, gender, begin, end);
+  public Result page(EmpQueryParam queryParam) {
+    log.info("分页查询，参数：{}", queryParam);
+    PageResult<Emp> pageResult = empService.page(queryParam);
     return Result.success(pageResult);
   }
 }

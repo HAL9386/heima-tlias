@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.heima.tliaswebmanagement.mapper.EmpMapper;
 import com.heima.tliaswebmanagement.pojo.Emp;
+import com.heima.tliaswebmanagement.pojo.EmpQueryParam;
 import com.heima.tliaswebmanagement.pojo.PageResult;
 import com.heima.tliaswebmanagement.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +50,9 @@ public class EmpServiceImpl implements EmpService {
    * 2 仅对紧跟其后的第一条SQL语句生效
    */
   @Override
-  public PageResult<Emp> page(Integer page, Integer pageSize, String name, Integer gender, LocalDate begin, LocalDate end) {
-    PageHelper.startPage(page, pageSize);
-    List<Emp> empList = empMapper.list(name, gender, begin, end);
+  public PageResult<Emp> page(EmpQueryParam queryParam) {
+    PageHelper.startPage(queryParam.getPage(), queryParam.getPageSize());
+    List<Emp> empList = empMapper.list(queryParam);
     Page<Emp> p = (Page<Emp>) empList;
     return new PageResult<>(p.getTotal(), p.getResult());
   }
