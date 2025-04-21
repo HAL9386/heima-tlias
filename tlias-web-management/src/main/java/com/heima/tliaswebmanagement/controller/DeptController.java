@@ -3,11 +3,13 @@ package com.heima.tliaswebmanagement.controller;
 import com.heima.tliaswebmanagement.pojo.Dept;
 import com.heima.tliaswebmanagement.pojo.Result;
 import com.heima.tliaswebmanagement.service.DeptService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RequestMapping("/depts")
 @RestController
 public class DeptController {
@@ -28,14 +30,14 @@ public class DeptController {
   @DeleteMapping
 //  public Result delete(@RequestParam("id") Integer deptID) {
     public Result delete(Integer id) {
-    System.out.println("delete dept id: " + id);
+    log.info("delete dept id: {}", id);
     deptService.deleteById(id);
     return Result.success();
   }
 
   @PostMapping
   public Result add(@RequestBody Dept dept) {
-    System.out.println("add dept: " + dept);
+    log.info("add dept: {}", dept);
     deptService.add(dept);
     return Result.success();
   }
@@ -53,7 +55,7 @@ public class DeptController {
 
   @PutMapping
   public Result update(@RequestBody Dept dept) {
-    System.out.println("update dept, id = " + dept.getId());
+    log.info("update dept, id = {}", dept.getId());
     deptService.update(dept);
     return Result.success();
   }
