@@ -9,6 +9,7 @@ import com.heima.tliaswebmanagement.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -36,14 +37,21 @@ public class EmpServiceImpl implements EmpService {
 
   /**
    * PageHelper分页查询
-   * @param page 页码
+   *
+   * @param page     页码
    * @param pageSize 每页显示的记录数
+   * @param name      用户名
+   * @param gender    性别
+   * @param begin     开始日期
+   * @param end       结束日期
    * @return 返回分页查询结果
+   * 1 定义的SQL语句结尾不能加分号，因为PageHelper是拼接的
+   * 2 仅对紧跟其后的第一条SQL语句生效
    */
   @Override
-  public PageResult<Emp> page(Integer page, Integer pageSize) {
+  public PageResult<Emp> page(Integer page, Integer pageSize, String name, Integer gender, LocalDate begin, LocalDate end) {
     PageHelper.startPage(page, pageSize);
-    List<Emp> empList = empMapper.list();
+    List<Emp> empList = empMapper.list(name, gender, begin, end);
     Page<Emp> p = (Page<Emp>) empList;
     return new PageResult<>(p.getTotal(), p.getResult());
   }
