@@ -2,8 +2,10 @@ package com.heima.tliaswebmanagement.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.heima.tliaswebmanagement.mapper.EmpExprMapper;
 import com.heima.tliaswebmanagement.mapper.EmpMapper;
 import com.heima.tliaswebmanagement.pojo.Emp;
+import com.heima.tliaswebmanagement.pojo.EmpExpr;
 import com.heima.tliaswebmanagement.pojo.EmpQueryParam;
 import com.heima.tliaswebmanagement.pojo.PageResult;
 import com.heima.tliaswebmanagement.service.EmpService;
@@ -11,14 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class EmpServiceImpl implements EmpService {
   private final EmpMapper empMapper;
+  private final EmpExprMapper empExprMapper;
   @Autowired
-  public EmpServiceImpl(EmpMapper empMapper) {
+  public EmpServiceImpl(EmpMapper empMapper, EmpExprMapper empExprMapper) {
     this.empMapper = empMapper;
+    this.empExprMapper = empExprMapper;
   }
 
   //
@@ -39,12 +44,6 @@ public class EmpServiceImpl implements EmpService {
   /**
    * PageHelper分页查询
    *
-   * @param page     页码
-   * @param pageSize 每页显示的记录数
-   * @param name      用户名
-   * @param gender    性别
-   * @param begin     开始日期
-   * @param end       结束日期
    * @return 返回分页查询结果
    * 1 定义的SQL语句结尾不能加分号，因为PageHelper是拼接的
    * 2 仅对紧跟其后的第一条SQL语句生效
@@ -55,5 +54,17 @@ public class EmpServiceImpl implements EmpService {
     List<Emp> empList = empMapper.list(queryParam);
     Page<Emp> p = (Page<Emp>) empList;
     return new PageResult<>(p.getTotal(), p.getResult());
+  }
+
+  @Override
+  public void save(Emp emp) {
+    emp.setCreateTime(LocalDateTime.now());
+    emp.setUpdateTime(LocalDateTime.now());
+    empMapper.insert(emp);
+    List<EmpExpr> exprList = emp.getExprList();
+    if (!exprList.isEmpty()) {
+      exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
+      empExprMapper.insertBatch(exprList);
+    }
   }
 }

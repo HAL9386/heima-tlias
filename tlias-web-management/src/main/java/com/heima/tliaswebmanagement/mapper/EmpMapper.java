@@ -2,7 +2,9 @@ package com.heima.tliaswebmanagement.mapper;
 
 import com.heima.tliaswebmanagement.pojo.Emp;
 import com.heima.tliaswebmanagement.pojo.EmpQueryParam;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDate;
@@ -35,4 +37,9 @@ public interface EmpMapper {
 //  @Select("select e.*, d.name as deptName from emp as e left join dept as d " +
 //    "on e.dept_id = d.id order by e.update_time desc")
   List<Emp> list(EmpQueryParam queryParam);
+
+  @Options(useGeneratedKeys = true, keyProperty = "id")
+  @Insert("insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +
+    "VALUE (#{username}, #{name}, #{gender}, #{phone}, #{job}, #{salary}, #{image}, #{entryDate}, #{deptId}, #{createTime}, #{updateTime})")
+  void insert(Emp emp);
 }

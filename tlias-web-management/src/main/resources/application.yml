@@ -11,3 +11,6 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
 #  mapper-locations: classpath*:com/heima/tliaswebmanagement/mapper/*.xml
+pagehelper:
+  reasonable: true
+  helper-dialect: mysql

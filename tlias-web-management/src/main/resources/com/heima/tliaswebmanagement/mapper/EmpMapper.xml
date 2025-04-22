@@ -6,9 +6,21 @@
 
   <select id="list" resultType="com.heima.tliaswebmanagement.pojo.Emp">
     select e.*, d.name as deptName from emp as e left join dept as d on e.dept_id = d.id
-      where e.name like concat('%',#{name},'%')
+      <!-- where e.name like concat('%',#{name},'%') -->
+      <!--   and e.gender = #{gender} -->
+      <!--   and e.entry_date between #{begin} and #{end} -->
+      <!-- order by e.update_time desc -->
+    <where>
+      <if test="name != null and name != ''">
+        e.name like concat('%',#{name},'%')
+      </if>
+      <if test="gender!= null and gender!= ''">
         and e.gender = #{gender}
+      </if>
+      <if test="begin!= null and end!= null">
         and e.entry_date between #{begin} and #{end}
-      order by e.update_time desc
+      </if>
+    </where>
+    order by e.update_time desc
   </select>
 </mapper>
