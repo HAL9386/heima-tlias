@@ -57,12 +57,14 @@ public class EmpServiceImpl implements EmpService {
     return new PageResult<>(p.getTotal(), p.getResult());
   }
 
-  @Transactional
+  @Transactional(rollbackFor = {Exception.class}) // 默认情况下，事务只对运行时异常进行回滚，对编译异常不回滚.
+  // 可以通过rollbackFor属性指定异常类型进行回滚
   @Override
-  public void save(Emp emp) {
+  public void save(Emp emp) throws Exception {
     emp.setCreateTime(LocalDateTime.now());
     emp.setUpdateTime(LocalDateTime.now());
     empMapper.insert(emp);
+    if (true) throw new Exception("$$$");
     List<EmpExpr> exprList = emp.getExprList();
     if (!exprList.isEmpty()) {
       exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
