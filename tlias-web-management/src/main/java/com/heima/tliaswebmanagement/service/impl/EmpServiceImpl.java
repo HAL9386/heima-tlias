@@ -4,16 +4,13 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.heima.tliaswebmanagement.mapper.EmpExprMapper;
 import com.heima.tliaswebmanagement.mapper.EmpMapper;
-import com.heima.tliaswebmanagement.pojo.Emp;
-import com.heima.tliaswebmanagement.pojo.EmpExpr;
-import com.heima.tliaswebmanagement.pojo.EmpQueryParam;
-import com.heima.tliaswebmanagement.pojo.PageResult;
+import com.heima.tliaswebmanagement.pojo.*;
+import com.heima.tliaswebmanagement.service.EmpLogService;
 import com.heima.tliaswebmanagement.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,26 +18,15 @@ import java.util.List;
 public class EmpServiceImpl implements EmpService {
   private final EmpMapper empMapper;
   private final EmpExprMapper empExprMapper;
+  private final EmpLogService empLogService;
   @Autowired
-  public EmpServiceImpl(EmpMapper empMapper, EmpExprMapper empExprMapper) {
+  public EmpServiceImpl(EmpMapper empMapper,
+                        EmpExprMapper empExprMapper,
+                        EmpLogService empLogService) {
     this.empMapper = empMapper;
     this.empExprMapper = empExprMapper;
+    this.empLogService = empLogService;
   }
-
-  //
-  // 原始分页查询实现
-  //
-
-//  @Override
-//  public PageResult<Emp> page(Integer page, Integer pageSize) {
-//    // 1 查询总记录数
-//    Long total = empMapper.count();
-//    // 2 查询结果列表
-//    Integer start = (page - 1) * pageSize;
-//    List<Emp> rows = empMapper.list(start, pageSize);
-//    // 3 封装并返回结果
-//    return new PageResult<Emp>(total, rows);
-//  }
 
   /**
    * PageHelper分页查询
@@ -61,14 +47,18 @@ public class EmpServiceImpl implements EmpService {
   // 可以通过rollbackFor属性指定异常类型进行回滚
   @Override
   public void save(Emp emp) throws Exception {
-    emp.setCreateTime(LocalDateTime.now());
-    emp.setUpdateTime(LocalDateTime.now());
-    empMapper.insert(emp);
-    if (true) throw new Exception("$$$");
-    List<EmpExpr> exprList = emp.getExprList();
-    if (!exprList.isEmpty()) {
-      exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
-      empExprMapper.insertBatch(exprList);
+    try {
+      emp.setCreateTime(LocalDateTime.now());
+      emp.setUpdateTime(LocalDateTime.now());
+      empMapper.insert(emp);
+      if (true) throw new Exception("$$$");
+      List<EmpExpr> exprList = emp.getExprList();
+      if (!exprList.isEmpty()) {
+        exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
+        empExprMapper.insertBatch(exprList);
+      }
+    } finally {
+      empLogService.insertLog(new EmpLog(null, LocalDateTime.now(), emp.toString()));
     }
   }
 }
