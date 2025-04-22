@@ -11,6 +11,7 @@ import com.heima.tliaswebmanagement.pojo.PageResult;
 import com.heima.tliaswebmanagement.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -56,6 +57,7 @@ public class EmpServiceImpl implements EmpService {
     return new PageResult<>(p.getTotal(), p.getResult());
   }
 
+  @Transactional
   @Override
   public void save(Emp emp) {
     emp.setCreateTime(LocalDateTime.now());
