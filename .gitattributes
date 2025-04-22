@@ -1,1 +1,2 @@
 *.vim linguist-language=Java
+*.pl  linguist-language=Javascript
