@@ -54,6 +54,20 @@
     from emp as e left join emp_expr as exp on e.id = exp.emp_id
     where e.id = #{id}
   </select>
+  <select id="countEmpJobData" resultType="java.util.Map">
+    select (
+    case job
+    when 1 then '班主任'
+    when 2 then '讲师'
+    when 3 then '学工主管'
+    when 4 then '教研主管'
+    when 5 then '咨询师'
+    else '其他'
+    end) as jobName,
+    count(*) as count
+    from emp
+    group by job
+  </select>
   <resultMap id="empResultMap" type="com.heima.tliaswebmanagement.pojo.Emp">
     <id property="id" column="id"/>
     <result property="username" column="username"/>

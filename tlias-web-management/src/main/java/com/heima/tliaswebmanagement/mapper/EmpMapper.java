@@ -5,6 +5,7 @@ import com.heima.tliaswebmanagement.pojo.EmpQueryParam;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface EmpMapper {
@@ -44,4 +45,11 @@ public interface EmpMapper {
   Emp queryById(Integer id);
 
   void updateById(Emp emp);
+
+  /**
+   * 查询员工的职位和对应数量
+   * @return 返回职位和数量的映射
+   */
+  @MapKey("jobName")
+  List<Map<String, Object>> countEmpJobData();
 }
