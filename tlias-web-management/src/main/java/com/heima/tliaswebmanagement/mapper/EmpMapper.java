@@ -52,4 +52,7 @@ public interface EmpMapper {
    */
   @MapKey("jobName")
   List<Map<String, Object>> countEmpJobData();
+
+  @MapKey("name")
+  List<Map<String, Object>> countEmpGenderData();
 }
