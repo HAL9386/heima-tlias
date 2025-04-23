@@ -3,6 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.heima.tliaswebmanagement.mapper.EmpMapper">
+  <delete id="deleteByIds">
+    delete from emp where id in
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
 
   <select id="list" resultType="com.heima.tliaswebmanagement.pojo.Emp">
     select e.*, d.name as deptName from emp as e left join dept as d on e.dept_id = d.id
@@ -23,4 +29,37 @@
     </where>
     order by e.update_time desc
   </select>
+  <select id="queryById" resultMap="empResultMap">
+    select e.*,
+      exp.id as exp_id,
+      exp.emp_id as exp_empId,
+      exp.begin as exp_begin,
+      exp.end as exp_end,
+      exp.company as exp_company,
+      exp.job as exp_job
+    from emp as e left join emp_expr as exp on e.id = exp.emp_id
+    where e.id = #{id}
+  </select>
+  <resultMap id="empResultMap" type="com.heima.tliaswebmanagement.pojo.Emp">
+    <id property="id" column="id"/>
+    <result property="username" column="username"/>
+    <result property="name" column="name"/>
+    <result property="gender" column="gender"/>
+    <result property="phone" column="phone"/>
+    <result property="job" column="job"/>
+    <result property="salary" column="salary"/>
+    <result property="image" column="image"/>
+    <result property="entryDate" column="entry_date"/>
+    <result property="deptId" column="dept_id"/>
+    <result property="updateTime" column="update_time"/>
+    <result property="createTime" column="create_time"/>
+    <collection property="exprList" ofType="com.heima.tliaswebmanagement.pojo.EmpExpr">
+      <id property="id" column="exp_id"/>
+      <result property="company" column="exp_company"/>
+      <result property="job" column="exp_job"/>
+      <result property="begin" column="exp_begin"/>
+      <result property="end" column="exp_end"/>
+      <result property="empId" column="exp_empId"/>
+    </collection>
+  </resultMap>
 </mapper>
