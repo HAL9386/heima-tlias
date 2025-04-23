@@ -3,6 +3,20 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.heima.tliaswebmanagement.mapper.EmpMapper">
+  <update id="updateById">
+    update emp
+    <set>
+      <if test="username   != null and username != ''">username = #{username},</if>
+      <if test="name       != null and name     != ''">name = #{name},</if>
+      <if test="gender     != null">gender = #{gender},</if>
+      <if test="image      != null and image    != ''">image = #{image},</if>
+      <if test="deptId     != null">dept_id = #{deptId},</if>
+      <if test="job        != null">job = #{job},</if>
+      <if test="salary     != null">salary = #{salary},</if>
+      <if test="updateTime != null">update_time = #{updateTime}</if>
+    </set>
+    where id = #{id}
+  </update>
   <delete id="deleteByIds">
     delete from emp where id in
     <foreach collection="ids" item="id" open="(" separator="," close=")">

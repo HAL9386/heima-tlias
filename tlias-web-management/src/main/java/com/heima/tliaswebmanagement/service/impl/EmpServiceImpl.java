@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -43,6 +44,11 @@ public class EmpServiceImpl implements EmpService {
     return new PageResult<>(p.getTotal(), p.getResult());
   }
 
+  /**
+   * 新增员工
+   *
+   * @param emp 员工信息
+   */
   @Transactional(rollbackFor = {Exception.class}) // 默认情况下，事务只对运行时异常进行回滚，对编译异常不回滚.
   // 可以通过rollbackFor属性指定异常类型进行回滚
   @Override
@@ -76,8 +82,31 @@ public class EmpServiceImpl implements EmpService {
     empExprMapper.deleteByEmpIds(ids);
   }
 
+  /**
+   * 根据ID查询员工信息
+   *
+   * @param id 员工ID
+   * @return 返回员工信息
+   */
   @Override
   public Emp queryById(Integer id) {
     return empMapper.queryById(id);
+  }
+
+  /**
+   * 修改员工信息
+   * 对于工作经历可能修改，删除，新增
+   * 1 先删除
+   * 2 再新增
+   *
+   * @param emp 员工信息
+   */
+  @Transactional(rollbackFor = {Exception.class})
+  @Override
+  public void update(Emp emp) {
+    emp.setUpdateTime(LocalDateTime.now());
+    empMapper.updateById(emp);
+    empExprMapper.deleteByEmpIds(Collections.singletonList(emp.getId()));
+    empExprMapper.insertBatch(emp.getExprList());
   }
 }
