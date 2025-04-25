@@ -3,6 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.heima.tliaswebmanagement.mapper.StudentMapper">
+  <delete id="deleteByIds">
+    delete from student where id in
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
   <select id="list" resultType="com.heima.tliaswebmanagement.pojo.Student">
     select s.*, c.name as clazzName from student as s left join clazz as c on s.clazz_id = c.id
     <where>

@@ -41,4 +41,12 @@ public class StudentServiceImpl implements StudentService {
   public Student getStudentById(Integer id) {
     return studentMapper.selectById(id);
   }
+
+  @Override
+  public void deleteByIds(List<Integer> ids) {
+    if (ids.isEmpty()) {
+      return;
+    }
+    studentMapper.deleteByIds(ids);
+  }
 }

@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/students")
@@ -44,10 +47,33 @@ public class StudentController {
     return Result.success();
   }
 
+  /**
+   * 根据ID查询学员信息
+   * @param id 学员ID
+   * @return 返回学员信息
+   */
   @GetMapping("/{id}")
   public Result getStudentById(@PathVariable Integer id) {
     log.info("根据ID查询学员信息, 参数: {}", id);
     Student student = studentService.getStudentById(id);
     return Result.success(student);
+  }
+
+  /**
+   * 批量删除学员
+   * @param ids 要删除的学员ID列表
+   */
+  @DeleteMapping("/{ids}")
+  public Result delete(@PathVariable String ids) {
+    log.info("批量删除学员, 参数: {}", ids);
+    try {
+      List<Integer> idList = Arrays.stream(ids.split(","))
+        .map(Integer::parseInt)
+        .toList();
+      studentService.deleteByIds(idList);
+      return Result.success();
+    } catch (NumberFormatException e) {
+      throw new IllegalArgumentException("参数格式错误，ID必须为数字");
+    }
   }
 }
