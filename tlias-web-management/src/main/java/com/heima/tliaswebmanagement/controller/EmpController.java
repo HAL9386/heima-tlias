@@ -77,4 +77,10 @@ public class EmpController {
     empService.update(emp);
     return Result.success();
   }
+
+  @GetMapping("/list")
+  public Result list() {
+    List<Emp> list = empService.list();
+    return Result.success(list);
+  }
 }

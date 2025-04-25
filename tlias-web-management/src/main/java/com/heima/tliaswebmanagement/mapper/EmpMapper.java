@@ -59,4 +59,8 @@ public interface EmpMapper {
    */
   @MapKey("name")
   List<Map<String, Object>> countEmpGenderData();
+
+  @Select("select e.id, e.username, e.name, e.gender, e.image, e.job," +
+    "e.salary, e.entry_date, e.dept_id, e.create_time, e.update_time from emp as e")
+  List<Emp> findAll();
 }

@@ -109,4 +109,9 @@ public class EmpServiceImpl implements EmpService {
     empExprMapper.deleteByEmpIds(Collections.singletonList(emp.getId()));
     empExprMapper.insertBatch(emp.getExprList());
   }
+
+  @Override
+  public List<Emp> list() {
+    return empMapper.findAll();
+  }
 }
