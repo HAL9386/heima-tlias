@@ -1,7 +1,9 @@
 package com.heima.tliaswebmanagement.service;
 
+import com.heima.tliaswebmanagement.exception.InvalidUserException;
 import com.heima.tliaswebmanagement.pojo.Emp;
 import com.heima.tliaswebmanagement.pojo.EmpQueryParam;
+import com.heima.tliaswebmanagement.pojo.LoginInfo;
 import com.heima.tliaswebmanagement.pojo.PageResult;
 
 import java.util.List;
@@ -18,4 +20,6 @@ public interface EmpService {
   void update(Emp emp);
 
   List<Emp> list();
+
+  LoginInfo getByUsernameAndPassword(Emp emp) throws InvalidUserException;
 }

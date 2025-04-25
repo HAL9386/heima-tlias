@@ -63,4 +63,7 @@ public interface EmpMapper {
   @Select("select e.id, e.username, e.name, e.gender, e.image, e.job," +
     "e.salary, e.entry_date, e.dept_id, e.create_time, e.update_time from emp as e")
   List<Emp> findAll();
+
+  @Select("select id, username, name from emp where username = #{username} and password = #{password}")
+  Emp getByUsernameAndPassword(Emp emp);
 }

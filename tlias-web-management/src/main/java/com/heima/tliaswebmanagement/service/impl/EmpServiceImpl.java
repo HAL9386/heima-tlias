@@ -2,6 +2,7 @@ package com.heima.tliaswebmanagement.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.heima.tliaswebmanagement.exception.InvalidUserException;
 import com.heima.tliaswebmanagement.mapper.EmpExprMapper;
 import com.heima.tliaswebmanagement.mapper.EmpMapper;
 import com.heima.tliaswebmanagement.pojo.*;
@@ -113,5 +114,19 @@ public class EmpServiceImpl implements EmpService {
   @Override
   public List<Emp> list() {
     return empMapper.findAll();
+  }
+
+  @Override
+  public LoginInfo getByUsernameAndPassword(Emp emp) throws InvalidUserException {
+    Emp e = empMapper.getByUsernameAndPassword(emp);
+    if (e == null) {
+      throw new InvalidUserException("用户名或密码错误");
+    }
+    LoginInfo info = new LoginInfo();
+    info.setId(e.getId());
+    info.setUsername(e.getUsername());
+    info.setName(e.getName());
+    info.setToken("token");
+    return info;
   }
 }

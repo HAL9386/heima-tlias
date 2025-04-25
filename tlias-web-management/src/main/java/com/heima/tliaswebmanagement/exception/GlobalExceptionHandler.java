@@ -29,4 +29,10 @@ public class GlobalExceptionHandler {
     log.error("全局异常处理器 删除班级：", e);
     return Result.error(e.getMessage());
   }
+
+  @ExceptionHandler(InvalidUserException.class)
+  public Result handleInvalidUserException(InvalidUserException e) {
+    log.error("全局异常处理器 无效用户：", e);
+    return Result.error(e.getMessage());
+  }
 }
