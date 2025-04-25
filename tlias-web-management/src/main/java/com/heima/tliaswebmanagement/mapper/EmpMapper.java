@@ -53,6 +53,10 @@ public interface EmpMapper {
   @MapKey("jobName")
   List<Map<String, Object>> countEmpJobData();
 
+  /**
+   * 查询员工的性别和对应数量
+   * @return 返回性别和数量的映射
+   */
   @MapKey("name")
   List<Map<String, Object>> countEmpGenderData();
 }
