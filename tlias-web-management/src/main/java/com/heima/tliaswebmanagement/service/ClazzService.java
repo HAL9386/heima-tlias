@@ -5,6 +5,8 @@ import com.heima.tliaswebmanagement.pojo.Clazz;
 import com.heima.tliaswebmanagement.pojo.ClazzQueryParam;
 import com.heima.tliaswebmanagement.pojo.PageResult;
 
+import java.util.List;
+
 public interface ClazzService {
   PageResult<Clazz> page(ClazzQueryParam clazzQueryParam);
 
@@ -15,4 +17,6 @@ public interface ClazzService {
   void deleteById(Integer id) throws DeleteClazzNotAllowedException;
 
   void update(Clazz clazz);
+
+  List<Clazz> findAll();
 }

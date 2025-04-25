@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/clazzs")
@@ -68,10 +70,26 @@ public class ClazzController {
     return Result.success();
   }
 
+  /**
+   * 根据id更新班级信息
+   * @param clazz 班级信息
+   * @return 更新结果
+   */
   @PutMapping
   public Result updateById(@RequestBody Clazz clazz) {
     log.info("根据ID更新班级，参数：{}", clazz);
     clazzService.update(clazz);
     return Result.success();
+  }
+
+  /**
+   * 查询所有班级
+   * @return 所有班级信息
+   */
+  @GetMapping("/list")
+  public Result list() {
+    log.info("查询所有班级");
+    List<Clazz> list = clazzService.findAll();
+    return Result.success(list);
   }
 }

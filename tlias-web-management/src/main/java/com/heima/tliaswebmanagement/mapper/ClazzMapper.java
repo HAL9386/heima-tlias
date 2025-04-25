@@ -28,4 +28,7 @@ public interface ClazzMapper {
   void deleteById(Integer id);
 
   void updateById(Clazz clazz);
+
+  @Select("select id, name, room, begin_date, end_date, master_id, subject, create_time, update_time from clazz")
+  List<Clazz> findAll();
 }

@@ -80,4 +80,9 @@ public class ClazzServiceImpl implements ClazzService {
     clazz.setUpdateTime(LocalDateTime.now());
     clazzMapper.updateById(clazz);
   }
+
+  @Override
+  public List<Clazz> findAll() {
+    return clazzMapper.findAll();
+  }
 }
