@@ -1,6 +1,6 @@
 package com.heima.tliaswebmanagement.controller;
 
-import com.heima.tliaswebmanagement.exception.DeleteClazzNotAllowedException;
+import com.heima.tliaswebmanagement.exception.DeleteNotAllowedException;
 import com.heima.tliaswebmanagement.pojo.Clazz;
 import com.heima.tliaswebmanagement.pojo.ClazzQueryParam;
 import com.heima.tliaswebmanagement.pojo.PageResult;
@@ -64,7 +64,7 @@ public class ClazzController {
    * @return 删除结果
    * */
   @DeleteMapping("/{id}")
-  public Result deleteById(@PathVariable Integer id) throws DeleteClazzNotAllowedException {
+  public Result deleteById(@PathVariable Integer id) throws DeleteNotAllowedException {
     log.info("根据ID删除班级，参数：{}", id);
     clazzService.deleteById(id);
     return Result.success();

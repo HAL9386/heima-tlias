@@ -24,8 +24,8 @@ public class GlobalExceptionHandler {
     return Result.error(errMsg[2] + "已存在");
   }
 
-  @ExceptionHandler(DeleteClazzNotAllowedException.class)
-  public Result handleDeleteClazzNotAllowedException(DeleteClazzNotAllowedException e) {
+  @ExceptionHandler(DeleteNotAllowedException.class)
+  public Result handleDeleteClazzNotAllowedException(DeleteNotAllowedException e) {
     log.error("全局异常处理器 删除班级：", e);
     return Result.error(e.getMessage());
   }

@@ -2,7 +2,7 @@ package com.heima.tliaswebmanagement.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.heima.tliaswebmanagement.exception.DeleteClazzNotAllowedException;
+import com.heima.tliaswebmanagement.exception.DeleteNotAllowedException;
 import com.heima.tliaswebmanagement.mapper.ClazzMapper;
 import com.heima.tliaswebmanagement.pojo.Clazz;
 import com.heima.tliaswebmanagement.pojo.ClazzQueryParam;
@@ -67,10 +67,10 @@ public class ClazzServiceImpl implements ClazzService {
   }
 
   @Override
-  public void deleteById(Integer id) throws DeleteClazzNotAllowedException {
+  public void deleteById(Integer id) throws DeleteNotAllowedException {
     Integer count = clazzMapper.countStudentById(id);
     if (count > 0) {
-      throw new DeleteClazzNotAllowedException("对不起, 该班级下有学生, 不能直接删除");
+      throw new DeleteNotAllowedException("对不起, 该班级下有学生, 不能直接删除");
     }
     clazzMapper.deleteById(id);
   }

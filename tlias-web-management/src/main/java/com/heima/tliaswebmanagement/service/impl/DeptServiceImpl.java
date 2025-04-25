@@ -1,5 +1,6 @@
 package com.heima.tliaswebmanagement.service.impl;
 
+import com.heima.tliaswebmanagement.exception.DeleteNotAllowedException;
 import com.heima.tliaswebmanagement.mapper.DeptMapper;
 import com.heima.tliaswebmanagement.pojo.Dept;
 import com.heima.tliaswebmanagement.service.DeptService;
@@ -24,7 +25,11 @@ public class DeptServiceImpl implements DeptService {
   }
 
   @Override
-  public void deleteById(Integer id) {
+  public void deleteById(Integer id) throws DeleteNotAllowedException {
+    Integer count = deptMapper.countByDeptId(id);
+    if (count > 0) {
+      throw new DeleteNotAllowedException("该部门下有员工，无法删除");
+    }
     deptMapper.deleteById(id);
   }
 

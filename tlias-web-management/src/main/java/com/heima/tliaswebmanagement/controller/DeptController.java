@@ -1,5 +1,6 @@
 package com.heima.tliaswebmanagement.controller;
 
+import com.heima.tliaswebmanagement.exception.DeleteNotAllowedException;
 import com.heima.tliaswebmanagement.pojo.Dept;
 import com.heima.tliaswebmanagement.pojo.Result;
 import com.heima.tliaswebmanagement.service.DeptService;
@@ -29,7 +30,7 @@ public class DeptController {
 
   @DeleteMapping
 //  public Result delete(@RequestParam("id") Integer deptID) {
-    public Result delete(Integer id) {
+    public Result delete(Integer id) throws DeleteNotAllowedException {
     log.info("delete dept id: {}", id);
     deptService.deleteById(id);
     return Result.success();
@@ -41,11 +42,6 @@ public class DeptController {
     deptService.add(dept);
     return Result.success();
   }
-
-//  @GetMapping("/depts/{id}")
-//  public Result getInfoById(@PathVariable("id") Integer deptId) {
-//
-//  }
 
   @GetMapping("/{id}")
   public Result getInfoById(@PathVariable Integer id) {
