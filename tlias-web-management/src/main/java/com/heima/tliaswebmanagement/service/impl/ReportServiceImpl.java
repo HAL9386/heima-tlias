@@ -2,6 +2,7 @@ package com.heima.tliaswebmanagement.service.impl;
 
 import com.heima.tliaswebmanagement.mapper.ClazzMapper;
 import com.heima.tliaswebmanagement.mapper.EmpMapper;
+import com.heima.tliaswebmanagement.mapper.StudentMapper;
 import com.heima.tliaswebmanagement.pojo.ClazzOption;
 import com.heima.tliaswebmanagement.pojo.JobOption;
 import com.heima.tliaswebmanagement.service.ReportService;
@@ -16,10 +17,12 @@ public class ReportServiceImpl implements ReportService {
 
   private final EmpMapper empMapper;
   private final ClazzMapper clazzMapper;
+  private final StudentMapper studentMapper;
   @Autowired
-  public ReportServiceImpl(EmpMapper empMapper, ClazzMapper clazzMapper) {
+  public ReportServiceImpl(EmpMapper empMapper, ClazzMapper clazzMapper, StudentMapper studentMapper) {
     this.empMapper = empMapper;
     this.clazzMapper = clazzMapper;
+    this.studentMapper = studentMapper;
   }
   @Override
   public JobOption getEmpJobData() {
@@ -40,5 +43,10 @@ public class ReportServiceImpl implements ReportService {
     List<String> nameList = list.stream().map(dataMap -> (String) dataMap.get("clazzName")).toList();
     List<Long> dataList = list.stream().map(dataMap -> (Long) dataMap.get("count")).toList();
     return new ClazzOption(nameList, dataList);
+  }
+
+  @Override
+  public List<Map<String, Object>> getStudentDegreeData() {
+    return studentMapper.countStudentDegreeData();
   }
 }

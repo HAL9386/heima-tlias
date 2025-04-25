@@ -43,10 +43,23 @@ public class ReportController {
     return Result.success(list);
   }
 
+  /**
+   * 统计报表：班级人数
+   */
   @GetMapping("/studentCountData")
   public Result getStudentCountData() {
     log.info("统计报表：班级人数");
     ClazzOption clazzOption = reportService.getStudentCountData();
     return Result.success(clazzOption);
+  }
+
+  /**
+   * 统计报表：学生学历信息
+   */
+  @GetMapping("/studentDegreeData")
+  public Result getStudentDegreeData() {
+    log.info("统计报表：学生学历信息");
+    List<Map<String, Object>> list = reportService.getStudentDegreeData();
+    return Result.success(list);
   }
 }

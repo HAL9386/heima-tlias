@@ -42,4 +42,14 @@
     </where>
     order by s.update_time desc
   </select>
+  <select id="countStudentDegreeData" resultType="java.util.Map">
+    select (case s.degree
+    when 1 then '初中'
+    when 2 then '高中'
+    when 3 then '大专'
+    when 4 then '本科'
+    when 5 then '硕士'
+    when 6 then '博士'
+    else '其他' end) as name, count(*) as value from student as s group by s.degree;
+  </select>
 </mapper>

@@ -3,10 +3,12 @@ package com.heima.tliaswebmanagement.mapper;
 import com.heima.tliaswebmanagement.pojo.Student;
 import com.heima.tliaswebmanagement.pojo.StudentQueryParam;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface StudentMapper {
@@ -22,4 +24,7 @@ public interface StudentMapper {
   void deleteByIds(List<Integer> ids);
 
   void updateById(Student student);
+
+  @MapKey("name")
+  List<Map<String, Object>> countStudentDegreeData();
 }
