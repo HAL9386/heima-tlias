@@ -1,6 +1,8 @@
 package com.heima.tliaswebmanagement.service.impl;
 
+import com.heima.tliaswebmanagement.mapper.ClazzMapper;
 import com.heima.tliaswebmanagement.mapper.EmpMapper;
+import com.heima.tliaswebmanagement.pojo.ClazzOption;
 import com.heima.tliaswebmanagement.pojo.JobOption;
 import com.heima.tliaswebmanagement.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,11 @@ import java.util.Map;
 public class ReportServiceImpl implements ReportService {
 
   private final EmpMapper empMapper;
+  private final ClazzMapper clazzMapper;
   @Autowired
-  public ReportServiceImpl(EmpMapper empMapper) {
+  public ReportServiceImpl(EmpMapper empMapper, ClazzMapper clazzMapper) {
     this.empMapper = empMapper;
+    this.clazzMapper = clazzMapper;
   }
   @Override
   public JobOption getEmpJobData() {
@@ -28,5 +32,13 @@ public class ReportServiceImpl implements ReportService {
   @Override
   public List<Map<String, Object>> getEmpGenderData() {
     return empMapper.countEmpGenderData();
+  }
+
+  @Override
+  public ClazzOption getStudentCountData() {
+    List<Map<String, Object>> list = clazzMapper.countStudentCountData();
+    List<String> nameList = list.stream().map(dataMap -> (String) dataMap.get("clazzName")).toList();
+    List<Long> dataList = list.stream().map(dataMap -> (Long) dataMap.get("count")).toList();
+    return new ClazzOption(nameList, dataList);
   }
 }

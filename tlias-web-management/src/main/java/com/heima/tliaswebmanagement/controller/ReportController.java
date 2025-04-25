@@ -1,5 +1,6 @@
 package com.heima.tliaswebmanagement.controller;
 
+import com.heima.tliaswebmanagement.pojo.ClazzOption;
 import com.heima.tliaswebmanagement.pojo.JobOption;
 import com.heima.tliaswebmanagement.pojo.Result;
 import com.heima.tliaswebmanagement.service.ReportService;
@@ -40,5 +41,12 @@ public class ReportController {
     log.info("统计报表：员工性别数据");
     List<Map<String, Object>> list = reportService.getEmpGenderData();
     return Result.success(list);
+  }
+
+  @GetMapping("/studentCountData")
+  public Result getStudentCountData() {
+    log.info("统计报表：班级人数");
+    ClazzOption clazzOption = reportService.getStudentCountData();
+    return Result.success(clazzOption);
   }
 }

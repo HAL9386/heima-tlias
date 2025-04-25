@@ -1,5 +1,6 @@
 package com.heima.tliaswebmanagement.service;
 
+import com.heima.tliaswebmanagement.pojo.ClazzOption;
 import com.heima.tliaswebmanagement.pojo.JobOption;
 
 import java.util.List;
@@ -9,4 +10,6 @@ public interface ReportService {
   JobOption getEmpJobData();
 
   List<Map<String, Object>> getEmpGenderData();
+
+  ClazzOption getStudentCountData();
 }
