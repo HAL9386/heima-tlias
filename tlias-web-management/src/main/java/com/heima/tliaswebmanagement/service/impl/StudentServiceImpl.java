@@ -10,6 +10,7 @@ import com.heima.tliaswebmanagement.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,5 +28,12 @@ public class StudentServiceImpl implements StudentService {
     List<Student> list = studentMapper.list(param);
     Page<Student> p = (Page<Student>) list;
     return new PageResult<>(p.getTotal(), p.getResult());
+  }
+
+  @Override
+  public void save(Student student) {
+    student.setCreateTime(LocalDateTime.now());
+    student.setUpdateTime(LocalDateTime.now());
+    studentMapper.insert(student);
   }
 }

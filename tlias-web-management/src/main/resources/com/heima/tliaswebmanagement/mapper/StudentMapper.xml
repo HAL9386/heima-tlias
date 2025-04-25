@@ -16,5 +16,6 @@
         and s.clazz_id = #{clazzId}
       </if>
     </where>
+    order by s.update_time desc
   </select>
 </mapper>
