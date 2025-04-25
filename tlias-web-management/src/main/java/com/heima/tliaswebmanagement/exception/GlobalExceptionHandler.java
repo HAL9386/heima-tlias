@@ -17,10 +17,16 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler
   public Result handleDuplicateKeyException(DuplicateKeyException e) {
-    log.error("全局异常处理器：", e);
+    log.error("全局异常处理器 重复键：", e);
     String msg = e.getMessage();
     int i = msg.indexOf("Duplicate entry");
     String[] errMsg = msg.substring(i).split(" ");
     return Result.error(errMsg[2] + "已存在");
+  }
+
+  @ExceptionHandler(DeleteClazzNotAllowedException.class)
+  public Result handleDeleteClazzNotAllowedException(DeleteClazzNotAllowedException e) {
+    log.error("全局异常处理器 删除班级：", e);
+    return Result.error(e.getMessage());
   }
 }
