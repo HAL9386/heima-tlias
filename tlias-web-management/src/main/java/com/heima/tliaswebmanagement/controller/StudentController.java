@@ -32,10 +32,22 @@ public class StudentController {
     return Result.success(pageResult);
   }
 
+  /**
+   * 新增学员
+   * @param student 学员信息
+   * @return 返回新增结果
+   */
   @PostMapping
   public Result save(@RequestBody Student student) {
     log.info("新增学员, 参数: {}", student);
     studentService.save(student);
     return Result.success();
+  }
+
+  @GetMapping("/{id}")
+  public Result getStudentById(@PathVariable Integer id) {
+    log.info("根据ID查询学员信息, 参数: {}", id);
+    Student student = studentService.getStudentById(id);
+    return Result.success(student);
   }
 }
