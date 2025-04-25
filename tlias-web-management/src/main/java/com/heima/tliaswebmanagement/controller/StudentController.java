@@ -88,4 +88,14 @@ public class StudentController {
     studentService.update(student);
     return Result.success();
   }
+
+  @PutMapping("/violation/{id}/{score}")
+  public Result violate(
+    @PathVariable Integer id,
+    @PathVariable Integer score
+  ) {
+    log.info("学生违纪扣分, id: {}, 扣除分数: {}", id, score);
+    studentService.handleViolation(id, score);
+    return Result.success();
+  }
 }
