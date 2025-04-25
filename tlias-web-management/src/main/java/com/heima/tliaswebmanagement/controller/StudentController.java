@@ -76,4 +76,16 @@ public class StudentController {
       throw new IllegalArgumentException("参数格式错误，ID必须为数字");
     }
   }
+
+  /**
+   * 修改学员信息
+   * @param student 学员信息
+   * @return 返回修改结果
+   */
+  @PutMapping
+  public Result update(@RequestBody Student student) {
+    log.info("修改学员信息, 参数: {}", student);
+    studentService.update(student);
+    return Result.success();
+  }
 }

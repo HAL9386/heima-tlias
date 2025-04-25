@@ -2,7 +2,6 @@ package com.heima.tliaswebmanagement.mapper;
 
 import com.heima.tliaswebmanagement.pojo.Student;
 import com.heima.tliaswebmanagement.pojo.StudentQueryParam;
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -21,4 +20,6 @@ public interface StudentMapper {
   Student selectById(Integer id);
 
   void deleteByIds(List<Integer> ids);
+
+  void updateById(Student student);
 }
