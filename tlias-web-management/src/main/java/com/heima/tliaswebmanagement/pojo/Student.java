@@ -26,4 +26,6 @@ public class Student {
   private Integer       violationScore; // 违规扣分
   private LocalDateTime createTime;     // 创建时间
   private LocalDateTime updateTime;     // 更新时间
+
+  private String clazzName; // 班级名称
 }

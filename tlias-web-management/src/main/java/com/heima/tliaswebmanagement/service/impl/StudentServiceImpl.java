@@ -1,0 +1,31 @@
+package com.heima.tliaswebmanagement.service.impl;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.heima.tliaswebmanagement.mapper.StudentMapper;
+import com.heima.tliaswebmanagement.pojo.PageResult;
+import com.heima.tliaswebmanagement.pojo.Student;
+import com.heima.tliaswebmanagement.pojo.StudentQueryParam;
+import com.heima.tliaswebmanagement.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class StudentServiceImpl implements StudentService {
+
+  private final StudentMapper studentMapper;
+
+  @Autowired
+  public StudentServiceImpl(StudentMapper studentMapper) {
+    this.studentMapper = studentMapper;
+  }
+  @Override
+  public PageResult<Student> page(StudentQueryParam param) {
+    PageHelper.startPage(param.getPage(), param.getPageSize());
+    List<Student> list = studentMapper.list(param);
+    Page<Student> p = (Page<Student>) list;
+    return new PageResult<>(p.getTotal(), p.getResult());
+  }
+}
