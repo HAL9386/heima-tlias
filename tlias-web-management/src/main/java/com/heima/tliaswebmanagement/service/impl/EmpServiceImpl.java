@@ -8,13 +8,16 @@ import com.heima.tliaswebmanagement.mapper.EmpMapper;
 import com.heima.tliaswebmanagement.pojo.*;
 import com.heima.tliaswebmanagement.service.EmpLogService;
 import com.heima.tliaswebmanagement.service.EmpService;
+import com.heima.tliaswebmanagement.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EmpServiceImpl implements EmpService {
@@ -122,11 +125,15 @@ public class EmpServiceImpl implements EmpService {
     if (e == null) {
       throw new InvalidUserException("用户名或密码错误");
     }
+    Map<String, Object> claims = new HashMap<>();
+    claims.put("id", e.getId());
+    claims.put("username", e.getUsername());
+    String token = JwtUtil.generateToken(claims);
     LoginInfo info = new LoginInfo();
     info.setId(e.getId());
     info.setUsername(e.getUsername());
     info.setName(e.getName());
-    info.setToken("token");
+    info.setToken(token);
     return info;
   }
 }
