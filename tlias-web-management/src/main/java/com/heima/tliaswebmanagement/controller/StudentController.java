@@ -1,5 +1,6 @@
 package com.heima.tliaswebmanagement.controller;
 
+import com.heima.tliaswebmanagement.anno.LogOperation;
 import com.heima.tliaswebmanagement.pojo.PageResult;
 import com.heima.tliaswebmanagement.pojo.Result;
 import com.heima.tliaswebmanagement.pojo.Student;
@@ -40,6 +41,7 @@ public class StudentController {
    * @param student 学员信息
    * @return 返回新增结果
    */
+  @LogOperation
   @PostMapping
   public Result save(@RequestBody Student student) {
     log.info("新增学员, 参数: {}", student);
@@ -63,6 +65,7 @@ public class StudentController {
    * 批量删除学员
    * @param ids 要删除的学员ID列表
    */
+  @LogOperation
   @DeleteMapping("/{ids}")
   public Result delete(@PathVariable String ids) {
     log.info("批量删除学员, 参数: {}", ids);
@@ -82,6 +85,7 @@ public class StudentController {
    * @param student 学员信息
    * @return 返回修改结果
    */
+  @LogOperation
   @PutMapping
   public Result update(@RequestBody Student student) {
     log.info("修改学员信息, 参数: {}", student);
@@ -89,6 +93,7 @@ public class StudentController {
     return Result.success();
   }
 
+  @LogOperation
   @PutMapping("/violation/{id}/{score}")
   public Result violate(
     @PathVariable Integer id,

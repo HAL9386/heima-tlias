@@ -1,5 +1,6 @@
 package com.heima.tliaswebmanagement.controller;
 
+import com.heima.tliaswebmanagement.anno.LogOperation;
 import com.heima.tliaswebmanagement.exception.DeleteNotAllowedException;
 import com.heima.tliaswebmanagement.pojo.Clazz;
 import com.heima.tliaswebmanagement.pojo.ClazzQueryParam;
@@ -39,6 +40,7 @@ public class ClazzController {
    * 新增班级
    * @param clazz 班级信息
    */
+  @LogOperation
   @PostMapping
   public Result save(@RequestBody Clazz clazz) {
     log.info("新增班级，参数：{}", clazz);
@@ -63,6 +65,7 @@ public class ClazzController {
    * @param id 班级id
    * @return 删除结果
    * */
+  @LogOperation
   @DeleteMapping("/{id}")
   public Result deleteById(@PathVariable Integer id) throws DeleteNotAllowedException {
     log.info("根据ID删除班级，参数：{}", id);
@@ -75,6 +78,7 @@ public class ClazzController {
    * @param clazz 班级信息
    * @return 更新结果
    */
+  @LogOperation
   @PutMapping
   public Result updateById(@RequestBody Clazz clazz) {
     log.info("根据ID更新班级，参数：{}", clazz);

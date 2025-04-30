@@ -1,5 +1,6 @@
 package com.heima.tliaswebmanagement.controller;
 
+import com.heima.tliaswebmanagement.anno.LogOperation;
 import com.heima.tliaswebmanagement.pojo.Emp;
 import com.heima.tliaswebmanagement.pojo.EmpQueryParam;
 import com.heima.tliaswebmanagement.pojo.PageResult;
@@ -40,6 +41,7 @@ public class EmpController {
    * @param emp 员工信息
    * @return 返回新增结果
    */
+  @LogOperation
   @PostMapping
   public Result save(@RequestBody Emp emp) throws Exception {
     log.info("新增员工，参数：{}", emp);
@@ -52,6 +54,7 @@ public class EmpController {
    * @param ids 要删除的员工ID列表
    * @return 返回删除结果
    */
+  @LogOperation
   @DeleteMapping
   public Result delete(@RequestParam List<Integer> ids) {
     log.info("批量删除，参数：{}", ids);
@@ -71,6 +74,7 @@ public class EmpController {
     return Result.success(emp);
   }
 
+  @LogOperation
   @PutMapping
   public Result update(@RequestBody Emp emp) {
     log.info("修改员工信息，参数：{}", emp);
